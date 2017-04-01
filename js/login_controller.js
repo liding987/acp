@@ -5,25 +5,33 @@ angular.module('myApp').controller('login_controller', ['$scope', '$http', funct
     $scope.isDisabled = true;
 
     $scope.login = function() {
-        // $scope.username = "in";
-        var data = {
-            'username' : $scope.username,
-            'password' : $scope.password
-        }
 
-        $http({
-            url: 'php/login_controller.php',
-            method: "POST",
-            data: data
-        })
-        .success(function(data, status, headers, config) {
-            console.log(status + ' - ' + data);
-        })
-        .error(function(data, status, headers, config) {
-            console.log('error');
-        }).then(function(data, status, headers, config){
-            $scope.showFunctions();
-        });
+        if (typeof $scope.username != "undefined" && typeof $scope.password != "undefined") {
+            var data = {
+                'username' : $scope.username,
+                'password' : $scope.password
+            }
+
+            $http({
+                url: 'php/login_controller.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config){
+                if ($scope.data != -1) {
+                    $scope.showFunctions();
+                }
+                // console.log("data: " + $scope.data);
+            });
+        } else {
+            console.log("username and password cannot be empty");
+        }
     }
 
     $scope.showFunctions = function() {
@@ -32,6 +40,33 @@ angular.module('myApp').controller('login_controller', ['$scope', '$http', funct
 
     $scope.logout = function() {
         $scope.isDisabled = true;
+    }
+
+    $scope.register = function() {
+
+        if (typeof $scope.username != "undefined" && typeof $scope.password != "undefined") {
+            var data = {
+                'username' : $scope.username,
+                'password' : $scope.password
+            }
+
+            $http({
+                url: 'php/register_controller.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config){
+                console.log($scope.data);
+            });
+        } else {
+            console.log("username and password cannot be empty");
+        }
     }
 
 }]);
