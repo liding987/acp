@@ -1,0 +1,196 @@
+<html lang="en" >
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Angular Material style sheet -->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+        <!-- Angular Material requires Angular.js Libraries -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <!-- Angular Material Library -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        <!-- Google Map -->
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTTv7h0qKA3oi8ruS47R1DNIJIgpmvN3g&libraries=places&callback=initMap">
+        </script>
+        <!-- css and js -->
+        <link rel="stylesheet" href="css/styles.css">
+        <script type="text/javascript" src="js/search_controller.js"></script>
+        <script type="text/javascript" src="js/initMap.js"></script>
+        <script type="text/javascript" src="js/login_controller.js"></script>
+        <script type="text/javascript" src="js/virtual_repeat_controller.js"></script>
+    </head>
+
+    <body ng-app="myApp" ng-cloak>
+
+        <div ng-app="myApp" ng-controller="login_controller" layout="column" ng-cloak class="md-inline-form">
+            <md-content layout-gt-sm="row" layout-padding>
+
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-disabled="isDisabled" class="md-raised md-primary">Save Result</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-disabled="isDisabled" class="md-raised md-primary">Show Results</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-disabled="isDisabled" class="md-raised md-primary">Apartment Report</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button md-no-ink class="md-primary" ng-click="login()">login</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button md-no-ink class="md-primary" ng-click="logout()">logout</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button md-no-ink class="md-primary" ng-click="register()">register</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+
+                <div>
+                    <md-input-container>
+                        <label>Username</label>
+                        <input ng-model="username" type="email">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Password</label>
+                        <input ng-model="password" type="password">
+                    </md-input-container>
+                </div>
+
+            </md-content>
+            <h1>{{username}} </h1><br>
+        </div>
+
+        <div ng-app="myApp" ng-controller="search_controller" layout="column" ng-cloak class="md-inline-form">
+            <md-content layout-padding>
+                <div>
+                    <md-input-container class="md-block">
+                        <label>Address</label>
+                        <input ng-model="address">
+                    </md-input-container>
+
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>City</label>
+                            <input ng-model="city">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>State</label>
+                            <input ng-model="state">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Postal Code</label>
+                            <input name="postal_code" ng-model="postal_code" placeholder="12345"
+                            required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                        </md-input-container>
+                    </div>
+                </div>
+            </md-content>
+
+            <div layout="column" layout-sm="column" layout-align="center center" layout-wrap="">
+                <section>
+                    <md-button class="md-raised" ng-click="search()">search</md-button>
+                    <md-button class="md-raised md-primary" ng-click="clearFunc()">clear</md-button>
+                </section>
+
+                <h1>{{address}} {{postal_code}}</h1><br>
+
+                <table>
+                    <tr>
+                        <td>price</td>
+                        <td>{{price}}</td>
+                    </tr>
+                    <tr>
+                        <td>restaurant</td>
+                        <td>{{num_restaurant}}</td>
+                    </tr>
+                    <tr>
+                        <td>supermarket</td>
+                        <td>{{num_supermarket}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bank</td>
+                        <td>{{num_bank}}</td>
+                    </tr>
+                    <tr>
+                        <td>Gas</td>
+                        <td>{{num_gas}}</td>
+                    </tr>
+                    <tr>
+                        <td>Detials</td>
+                        <td><a ng-href="{{link}}">Zillow link</a></td>
+                    </tr>
+                    <tr>
+                        <td>Rating</td>
+                        <td>{{rating}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- <div ng-app="myApp" ng-controller="search_controller as ctrl" ng-cloak>
+            <md-content layout="column">
+                <md-virtual-repeat-container id="vertical-container">
+                    <p>hahah</p>
+                    <div md-virtual-repeat="item in ctrl.items" class="repeated-item" flex>
+                        {{item}}
+                    </div>
+                </md-virtual-repeat-container>
+            </md-content>
+        </div> -->
+
+        <!-- <div ng-app="myApp" ng-controller="search_controller" layout="column" layout-sm="column" layout-align="center center" layout-wrap="" >
+            <md-input-container>
+                <label>Apartment Address</label>
+                <input ng-model="address" type="text">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Zip Code</label>
+                <input ng-model="zip_code" type="number">
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Address</label>
+                <input ng-model="user.address">
+            </md-input-container>
+
+
+            <p>address: <input type="text" ng-model="address" placeholder="Apartment address"></p>
+            <p>Zip Code: <input type="text" ng-model="zip_code" placeholder="Zip code"></p>
+        </div> -->
+    </body>
+
+    <!-- <p>start</p>
+
+    <div ng-app="myApp" ng-controller="virtual_repeat_controller as ctrl">
+      <md-content>
+
+            <md-virtual-repeat-container md-top-index="topIndex">
+                <div md-virtual-repeat="i in items" md-item-size="20">Hello {{i}}!</div>
+            </md-virtual-repeat-container>
+
+
+            <md-virtual-repeat-container id="vertical-container" style="visibility:{{show}}">
+                <div md-virtual-repeat="item in ctrl.items" md-on-demand="" class="repeated-item" flex="">
+                    {{item}}
+                </div>
+            </md-virtual-repeat-container>
+        </md-content>
+    </div>
+
+    <p>end</p> -->
+
+    <body>
+        <div id="map"></div>
+    </body>
+</html>
