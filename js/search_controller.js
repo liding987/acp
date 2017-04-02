@@ -6,6 +6,7 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
     $scope.state = "GA";
     $scope.country = "";
     $scope.postal_code = "30329";
+    $scope.radius = 1000;
 
     $scope.price;
     $scope.link_name;
@@ -121,7 +122,7 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
         // var location    = "location=-33.8670522,151.1957362"
         var location    = "location=" + $scope.lat +","+ $scope.lng;
         console.log(location);
-        var radius      = "&radius=1000";
+        var radius      = "&radius=" + $scope.radius;
         var restaurant  = "&type=restaurant";
         var supermarket = "&type=supermarket";
         var bank        = "&type=bank";
