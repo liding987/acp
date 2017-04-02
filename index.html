@@ -16,14 +16,15 @@
         </script>
         <!-- css and js -->
         <link rel="stylesheet" href="css/styles.css">
+        <script type="text/javascript" src="js/acp.js"></script>
         <script type="text/javascript" src="js/search_controller.js"></script>
-        <script type="text/javascript" src="js/initMap.js"></script>
         <script type="text/javascript" src="js/user_console_controller.js"></script>
         <script type="text/javascript" src="js/virtual_repeat_controller.js"></script>
+        <script type="text/javascript" src="js/initMap.js"></script>
     </head>
 
-    <body ng-app="myApp" ng-cloak>
-        <div ng-app="myApp" ng-controller="user_console_controller" layout="column" ng-cloak class="md-inline-form">
+    <body ng-app="acp" ng-cloak>
+        <div ng-app="acp" ng-controller="user_console_controller" layout="column" ng-cloak class="md-inline-form">
             <md-content layout-gt-sm="row" layout-padding>
 
                 <md-menu-content>
@@ -65,7 +66,7 @@
             </md-content>
         </div>
 
-        <div ng-app="myApp" ng-controller="search_controller" layout="column" ng-cloak class="md-inline-form">
+        <div ng-app="acp" ng-controller="search_controller" layout="column" ng-cloak class="md-inline-form">
             <md-content layout-padding>
                 <div>
                     <md-input-container class="md-block">
@@ -91,7 +92,7 @@
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Radius (meter)</label>
+                            <label>Radius (Meter)</label>
                             <input ng-model="radius" placeholder="1000">
                         </md-input-container>
 

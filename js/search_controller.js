@@ -1,4 +1,5 @@
-angular.module('myApp', ['ngMaterial']).controller('search_controller', function($scope, $http) {
+angular.module('acp').controller('search_controller', ['$scope', '$http', function($scope, $http) {
+
     $scope.apartment = "7000 Briarcliff Gables Cir NE Atlanta GA 30329";
 
     $scope.address = "7000 Briarcliff Gables Cir NE";
@@ -265,4 +266,6 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
         $scope.link_name = "";
         $scope.link = "";
     };
-});
+
+}]);
+// });

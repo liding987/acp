@@ -1,11 +1,9 @@
-angular.module('myApp').controller('user_console_controller', ['$scope', '$http', function($scope, $http) {
-
+angular.module('acp').controller('user_console_controller', ['$scope', '$http', function($scope, $http) {
     $scope.username;
     $scope.password;
     $scope.isDisabled = true;
 
     $scope.login = function() {
-
         if (typeof $scope.username != "undefined" && typeof $scope.password != "undefined") {
             var data = {
                 'username' : $scope.username,
@@ -47,7 +45,6 @@ angular.module('myApp').controller('user_console_controller', ['$scope', '$http'
     }
 
     $scope.register = function() {
-
         if (typeof $scope.username != "undefined" && typeof $scope.password != "undefined") {
             var data = {
                 'username' : $scope.username,
@@ -71,6 +68,10 @@ angular.module('myApp').controller('user_console_controller', ['$scope', '$http'
         } else {
             console.log("username and password cannot be empty");
         }
+    }
+
+    $scope.save_result = function() {
+        console.log($scope.address);
     }
 
 }]);
