@@ -18,21 +18,20 @@
         <link rel="stylesheet" href="css/styles.css">
         <script type="text/javascript" src="js/search_controller.js"></script>
         <script type="text/javascript" src="js/initMap.js"></script>
-        <script type="text/javascript" src="js/login_controller.js"></script>
+        <script type="text/javascript" src="js/user_console_controller.js"></script>
         <script type="text/javascript" src="js/virtual_repeat_controller.js"></script>
     </head>
 
     <body ng-app="myApp" ng-cloak>
-
-        <div ng-app="myApp" ng-controller="login_controller" layout="column" ng-cloak class="md-inline-form">
+        <div ng-app="myApp" ng-controller="user_console_controller" layout="column" ng-cloak class="md-inline-form">
             <md-content layout-gt-sm="row" layout-padding>
 
                 <md-menu-content>
                     <md-menu-item>
-                        <md-button ng-disabled="isDisabled" class="md-raised md-primary">Save Result</md-button>
+                        <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()">Save Result</md-button>
                     </md-menu-item>
                     <md-menu-item>
-                        <md-button ng-disabled="isDisabled" class="md-raised md-primary">Show Results</md-button>
+                        <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()">Show Results</md-button>
                     </md-menu-item>
                     <md-menu-item>
                         <md-button ng-disabled="isDisabled" class="md-raised md-primary">Apartment Report</md-button>
@@ -64,7 +63,6 @@
                 </div>
 
             </md-content>
-            <h1>{{username}} </h1><br>
         </div>
 
         <div ng-app="myApp" ng-controller="search_controller" layout="column" ng-cloak class="md-inline-form">
@@ -101,8 +99,6 @@
                     <md-button class="md-raised md-primary" ng-click="clearFunc()">clear</md-button>
                 </section>
 
-                <h1>{{address}} {{postal_code}}</h1><br>
-
                 <table>
                     <tr>
                         <td>price</td>
@@ -126,7 +122,7 @@
                     </tr>
                     <tr>
                         <td>Detials</td>
-                        <td><a ng-href="{{link}}">Zillow link</a></td>
+                        <td><a ng-href="{{link}}">{{link_name}}</a></td>
                     </tr>
                     <tr>
                         <td>Rating</td>
@@ -134,7 +130,6 @@
                     </tr>
                 </table>
             </div>
-
         </div>
 
         <!-- <div ng-app="myApp" ng-controller="search_controller as ctrl" ng-cloak>

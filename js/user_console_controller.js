@@ -1,4 +1,4 @@
-angular.module('myApp').controller('login_controller', ['$scope', '$http', function($scope, $http) {
+angular.module('myApp').controller('user_console_controller', ['$scope', '$http', function($scope, $http) {
 
     $scope.username;
     $scope.password;
@@ -13,7 +13,7 @@ angular.module('myApp').controller('login_controller', ['$scope', '$http', funct
             }
 
             $http({
-                url: 'php/login_controller.php',
+                url: 'php/login.php',
                 method: "POST",
                 data: data
             })
@@ -25,7 +25,7 @@ angular.module('myApp').controller('login_controller', ['$scope', '$http', funct
                 console.log('error');
             }).then(function(data, status, headers, config){
                 if ($scope.data != -1) {
-                    $scope.showFunctions();
+                    $scope.enable_button();
                 }
                 // console.log("data: " + $scope.data);
             });
@@ -34,12 +34,16 @@ angular.module('myApp').controller('login_controller', ['$scope', '$http', funct
         }
     }
 
-    $scope.showFunctions = function() {
+    $scope.enable_button = function() {
         $scope.isDisabled = false;
+        $scope.username = "";
+        $scope.password = "";
     }
 
     $scope.logout = function() {
         $scope.isDisabled = true;
+        $scope.username = "";
+        $scope.password = "";
     }
 
     $scope.register = function() {
@@ -51,7 +55,7 @@ angular.module('myApp').controller('login_controller', ['$scope', '$http', funct
             }
 
             $http({
-                url: 'php/register_controller.php',
+                url: 'php/register.php',
                 method: "POST",
                 data: data
             })

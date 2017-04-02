@@ -21,6 +21,7 @@ $sql = <<<SQL
      where username = "$user"
        and password = "$pass"
 SQL;
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
