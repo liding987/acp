@@ -89,6 +89,12 @@
                             <input name="postal_code" ng-model="postal_code" placeholder="12345"
                             required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
                         </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Radius (meter)</label>
+                            <input ng-model="radius" placeholder="1000">
+                        </md-input-container>
+
                     </div>
                 </div>
             </md-content>
