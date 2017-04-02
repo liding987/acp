@@ -7,20 +7,15 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
     $scope.country = "";
     $scope.postal_code = "30329";
 
-    // $scope.address = "";
-    // $scope.city = "";
-    // $scope.state = "";
-    // $scope.country = "";
-    // $scope.postal_code = "";
+    $scope.price;
+    $scope.link_name;
+    $scope.link;
+    $scope.num_gas;
+    $scope.num_bank;
+    $scope.num_supermarket;
+    $scope.num_restaurant;
 
-    $scope.price = "not available";
-    $scope.link = "http://52.14.213.183/";
-    $scope.num_gas = 0;
-    $scope.num_bank = 0;
-    $scope.num_supermarket = 0;
-    $scope.num_restaurant = 0;
-
-    $scope.rating = 0;
+    $scope.rating;
     $scope.review;
 
     $scope.lat;
@@ -81,7 +76,7 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
             center: {lat: $scope.lat, lng: $scope.lng},
             zoom: 15
         });
-        var service = new google.maps.places.PlacesService(map); // map is your map object
+        var service = new google.maps.places.PlacesService(map);
 
         service.getDetails(request, function(place, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -126,7 +121,7 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
         // var location    = "location=-33.8670522,151.1957362"
         var location    = "location=" + $scope.lat +","+ $scope.lng;
         console.log(location);
-        var radius      = "&radius=100";
+        var radius      = "&radius=1000";
         var restaurant  = "&type=restaurant";
         var supermarket = "&type=supermarket";
         var bank        = "&type=bank";
@@ -142,8 +137,8 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
         }).error(function(data, status, headers, config) {
             $scope.status = status;
         }).then(function(data, status, headers, config) {
-            $scope.num_restaurant  = $scope.data.results.length;
-            console.log($scope.data.results.length);
+            $scope.num_restaurant = $scope.data.results.length;
+            console.log("restaurant: "  + $scope.data.results.length);
         });
 
         $http({
@@ -156,9 +151,10 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_supermarket = $scope.data.results.length;
-            console.log($scope.data.results.length);
+            console.log("supermarket: "  + $scope.data.results.length);
         });
 
+        console.log(url + location + radius + bank + api_key);
         $http({
             url: url + location + radius + bank + api_key,
             method: "GET",
@@ -169,7 +165,7 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_bank = $scope.data.results.length;
-            console.log($scope.data.results.length);
+            console.log("bank: "  + $scope.data.results.length);
         });
 
         $http({
@@ -182,9 +178,8 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_gas = $scope.data.results.length;
-            console.log($scope.data.results.length);
+            console.log("gas station: " + $scope.data.results.length);
         });
-
         // console.log($scope.data);
     }
 
@@ -206,18 +201,50 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
         }).then(function(data, status, headers, config) {
             var parser  = new DOMParser();
             var xmlDoc  = parser.parseFromString($scope.data, "text/xml");
-            var results = xmlDoc.getElementsByTagName("response")[0].childNodes[0];
-            var links   = results.getElementsByTagName("result")[0].childNodes[1];
-            var link    = links.getElementsByTagName("homedetails")[0].childNodes[0].nodeValue;
 
+            var results;
+            try {
+                results = xmlDoc.getElementsByTagName("response")[0].childNodes[0];
+            }
+            catch(err) {
+                $scope.link_name = "not available";
+                $scope.price = "not available";
+            }
+
+            var links         = results.getElementsByTagName("result")[0].childNodes[1];
             var rentzestimate = results.getElementsByTagName("result")[0].childNodes[4];
-            var amount = rentzestimate.getElementsByTagName("amount")[0].childNodes[0].nodeValue;
-            // console.log(rentzestimate);
-            // console.log(amount);
 
-            // console.log(link);
-            $scope.price = "$" + amount + "+ /mo";
-            $scope.link = link;
+            try {
+                var link    = links.getElementsByTagName("homedetails")[0].childNodes[0].nodeValue;
+                $scope.link_name = "Zillow"
+                $scope.link = link;
+            }
+            catch(err) {
+                // $scope.link = "not available";
+                $scope.link_name =  "not available";
+            }
+
+            try {
+                var amount = rentzestimate.getElementsByTagName("amount")[0].childNodes[0].nodeValue;
+                $scope.price = "$" + amount + "+ /mo";
+            }
+            catch(err) {
+                $scope.price = "not available";
+            }
+
+
+            // console.log("amount: " + amount);
+            // if (amount != "undefined") {
+            //     $scope.price = "$" + amount + "+ /mo";
+            // } else {
+            //     $scope.price = "not available";
+            // }
+
+            // if (link != "undefined") {
+            //     $scope.link = link;
+            // } else {
+            //     $scope.link = "not available";
+            // }
         });
     }
 
@@ -228,9 +255,13 @@ angular.module('myApp', ['ngMaterial']).controller('search_controller', function
         $scope.country = "";
         $scope.postal_code = "";
 
-        $scope.num_gas = 0;
-        $scope.num_bank = 0;
-        $scope.num_supermarket = 0;
-        $scope.num_restaurant = 0;
+        $scope.rating = "";
+        $scope.price = "";
+        $scope.num_gas = "";
+        $scope.num_bank = "";
+        $scope.num_supermarket = "";
+        $scope.num_restaurant = "";
+        $scope.link_name = "";
+        $scope.link = "";
     };
 });
