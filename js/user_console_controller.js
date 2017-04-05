@@ -1,4 +1,5 @@
-angular.module('acp').controller('user_console_controller', ['$scope', '$http', function($scope, $http) {
+// var acp = angular.module('acp');
+acp.controller('user_console_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
     $scope.username;
     $scope.password;
     $scope.isDisabled = true;
@@ -71,7 +72,28 @@ angular.module('acp').controller('user_console_controller', ['$scope', '$http', 
     }
 
     $scope.save_result = function() {
-        console.log($scope.address);
+
+        // if result === null { warning } else { save }
+        $scope.result = MyService.result;
+        console.log($scope.result);
+        // console.log($scope.result.address);
+        // console.log($scope.result.city);
+        // console.log($scope.result.state);
+        //
+        // $scope.result.postal_code;
+        // $scope.result.radius;
+        // $scope.result.price       = $scope.price;
+        // $scope.result.link        = $scope.link;
+        // $scope.result.num_gas     = $scope.num_gas;
+        // $scope.result.num_bank    = $scope.num_bank;
+        // $scope.result.num_supermarket = $scope.num_supermarket;
+        // $scope.result.num_restaurant  = $scope.num_restaurant;
+        // MyService.result.rating      = $scope.rating;
+        // MyService.result.lat         = $scope.lat;
+        // MyService.result.lng         = $scope.lng;
+        // MyService.result.place_id    = $scope.place_id;
+
+
     }
 
 }]);

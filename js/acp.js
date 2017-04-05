@@ -1,1 +1,1 @@
-angular.module('acp', ['ngMaterial']);
+var acp = angular.module('acp', ['ngMaterial']);
