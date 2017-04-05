@@ -1,6 +1,7 @@
 create table tb_result (
-    result_id             integer       primary key     auto_increment,
-    user_id               integer       not null,
+    result_id             integer        primary key auto_increment,
+    user_id               integer        not null,
+    created               timestamp      default current_timestamp,
     address               varchar(250),
     city                  varchar(20),
     state                 varchar(20),
