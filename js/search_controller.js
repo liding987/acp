@@ -123,8 +123,10 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             var postal_code   = $scope.data.result.address_components[6].short_name;
             console.log(street_number + " " + street_name + ", " + city + " " + state + " " + postal_code);
 
+            MyService.result.isSet       = true;
             MyService.result.address     = street_number + " " + street_name;
             MyService.result.city        = city;
+            MyService.result.county      = county;
             MyService.result.state       = state;
             MyService.result.postal_code = postal_code;
             MyService.result.radius      = $scope.radius;

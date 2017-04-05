@@ -72,28 +72,45 @@ acp.controller('user_console_controller', ['$scope', '$http', 'MyService', funct
     }
 
     $scope.save_result = function() {
-
-        // if result === null { warning } else { save }
         $scope.result = MyService.result;
-        console.log($scope.result);
-        // console.log($scope.result.address);
-        // console.log($scope.result.city);
-        // console.log($scope.result.state);
-        //
-        // $scope.result.postal_code;
-        // $scope.result.radius;
-        // $scope.result.price       = $scope.price;
-        // $scope.result.link        = $scope.link;
-        // $scope.result.num_gas     = $scope.num_gas;
-        // $scope.result.num_bank    = $scope.num_bank;
-        // $scope.result.num_supermarket = $scope.num_supermarket;
-        // $scope.result.num_restaurant  = $scope.num_restaurant;
-        // MyService.result.rating      = $scope.rating;
-        // MyService.result.lat         = $scope.lat;
-        // MyService.result.lng         = $scope.lng;
-        // MyService.result.place_id    = $scope.place_id;
+        if ($scope.result.isSet === true) {
+            var data = {
+                'address'         : $scope.result.address,
+                'city'            : $scope.result.city,
+                'county'          : $scope.result.county,
+                'state'           : $scope.result.state,
+                'postal_code'     : $scope.result.postal_code,
+                'radius'          : $scope.result.radius,
+                'price'           : $scope.result.price,
+                'link'            : $scope.result.link,
+                'num_gas'         : $scope.result.num_gas,
+                'num_bank'        : $scope.result.num_bank,
+                'num_supermarket' : $scope.result.num_supermarket,
+                'num_restaurant'  : $scope.result.num_restaurant,
+                'rating'          : $scope.result.rating,
+                'lat'             : $scope.result.lat,
+                'lng'             : $scope.result.lng,
+                'place_id'        : $scope.result.place_id
+            }
 
-
+            // console.log(data);
+            $http({
+                url: 'php/save_result.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                console.log("result saved");
+            });
+        } else {
+            console.log("result cannot be empty");
+        }
     }
 
 }]);

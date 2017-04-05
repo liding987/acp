@@ -2,6 +2,7 @@
 acp.factory('MyService', function() {
     return {
         result: {
+            isSet: false,
             address: '',
             city: '',
             state: '',
