@@ -2,6 +2,7 @@
 $postdata = file_get_contents("php://input");
 $request  = json_decode($postdata);
 
+$user_id         = $request->user_id;
 $address         = $request->address;
 $city            = $request->city;
 $county          = $request->county;
@@ -33,6 +34,7 @@ if ($con->connect_error) {
 $sql = <<<SQL
     insert into tb_result
     (
+        user_id,
         address,
         city,
         state,
@@ -52,6 +54,7 @@ $sql = <<<SQL
     )
     values
     (
+        $user_id,
         "$address",
         "$city",
         "$county",

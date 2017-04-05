@@ -1,6 +1,8 @@
-// var acp = angular.module('acp');
 acp.factory('MyService', function() {
     return {
+        user: {
+            user_id: 0
+        },
         result: {
             isSet: false,
             address: '',
