@@ -1,4 +1,6 @@
-angular.module('acp').controller('search_controller', ['$scope', '$http', function($scope, $http) {
+// angular.module('acp').
+// var acp = angular.module('acp');
+acp.controller('search_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
 
     $scope.apartment = "7000 Briarcliff Gables Cir NE Atlanta GA 30329";
 
@@ -34,6 +36,10 @@ angular.module('acp').controller('search_controller', ['$scope', '$http', functi
     $scope.search = function() {
         $scope.getAddress();
         $scope.getZillow();
+
+        setTimeout(function () {
+            $scope.getPlaceDetails();
+        }, 3000);
     }
 
     $scope.getAddress = function() {
@@ -66,7 +72,6 @@ angular.module('acp').controller('search_controller', ['$scope', '$http', functi
             console.log($scope.lng);
             $scope.getNearby();
             $scope.getRating();
-            $scope.getPlaceDetails();
         });
     };
 
@@ -109,7 +114,32 @@ angular.module('acp').controller('search_controller', ['$scope', '$http', functi
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             console.log("getPlaceDetails()");
-            console.log($scope.data);
+            var street_number = $scope.data.result.address_components[0].short_name;
+            var street_name   = $scope.data.result.address_components[1].short_name;
+            var city          = $scope.data.result.address_components[2].short_name;
+            var county        = $scope.data.result.address_components[3].short_name;
+            var state         = $scope.data.result.address_components[4].short_name;
+            var country       = $scope.data.result.address_components[5].short_name;
+            var postal_code   = $scope.data.result.address_components[6].short_name;
+            console.log(street_number + " " + street_name + ", " + city + " " + state + " " + postal_code);
+
+            MyService.result.address     = street_number + " " + street_name;
+            MyService.result.city        = city;
+            MyService.result.state       = state;
+            MyService.result.postal_code = postal_code;
+            MyService.result.radius      = $scope.radius;
+            MyService.result.price       = $scope.price;
+            MyService.result.link        = $scope.link;
+            MyService.result.num_gas     = $scope.num_gas;
+            MyService.result.num_bank    = $scope.num_bank;
+            MyService.result.num_supermarket = $scope.num_supermarket;
+            MyService.result.num_restaurant  = $scope.num_restaurant;
+            MyService.result.rating      = $scope.rating;
+            MyService.result.lat         = $scope.lat;
+            MyService.result.lng         = $scope.lng;
+            MyService.result.place_id    = $scope.place_id;
+            // $scope.result = MyService.result;
+            // console.log($scope.result);
             // console.log($scope.data.result);
             // console.log($scope.data.result.rating);
             // console.log($scope.data.result.reviews);
@@ -256,7 +286,6 @@ angular.module('acp').controller('search_controller', ['$scope', '$http', functi
         $scope.state = "";
         $scope.country = "";
         $scope.postal_code = "";
-
         $scope.rating = "";
         $scope.price = "";
         $scope.num_gas = "";
