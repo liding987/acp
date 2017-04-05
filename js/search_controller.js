@@ -1,8 +1,4 @@
-// angular.module('acp').
-// var acp = angular.module('acp');
 acp.controller('search_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
-
-    $scope.apartment = "7000 Briarcliff Gables Cir NE Atlanta GA 30329";
 
     $scope.address = "7000 Briarcliff Gables Cir NE";
     $scope.city = "Atlanta";
@@ -121,7 +117,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             var state         = $scope.data.result.address_components[4].short_name;
             var country       = $scope.data.result.address_components[5].short_name;
             var postal_code   = $scope.data.result.address_components[6].short_name;
-            console.log(street_number + " " + street_name + ", " + city + " " + state + " " + postal_code);
 
             MyService.result.isSet       = true;
             MyService.result.address     = street_number + " " + street_name;
@@ -140,19 +135,11 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             MyService.result.lat         = $scope.lat;
             MyService.result.lng         = $scope.lng;
             MyService.result.place_id    = $scope.place_id;
-            // $scope.result = MyService.result;
-            // console.log($scope.result);
-            // console.log($scope.data.result);
-            // console.log($scope.data.result.rating);
-            // console.log($scope.data.result.reviews);
-            // console.log(status);
-            // console.log(headers);
         });
     }
 
     $scope.getNearby = function() {
         var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-        // var location    = "location=-33.8670522,151.1957362"
         var location    = "location=" + $scope.lat +","+ $scope.lng;
         console.log(location);
         var radius      = "&radius=" + $scope.radius;

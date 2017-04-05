@@ -1,4 +1,3 @@
-// var acp = angular.module('acp');
 acp.controller('user_console_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
     $scope.username;
     $scope.password;
@@ -26,7 +25,7 @@ acp.controller('user_console_controller', ['$scope', '$http', 'MyService', funct
                 if ($scope.data != -1) {
                     $scope.enable_button();
                 }
-                // console.log("data: " + $scope.data);
+                MyService.user.user_id = $scope.data;
             });
         } else {
             console.log("username and password cannot be empty");
@@ -73,8 +72,10 @@ acp.controller('user_console_controller', ['$scope', '$http', 'MyService', funct
 
     $scope.save_result = function() {
         $scope.result = MyService.result;
-        if ($scope.result.isSet === true) {
+        $scope.user   = MyService.user;
+        if ($scope.result.isSet === true && $scope.user.user_id) {
             var data = {
+                'user_id'         : $scope.user.user_id,
                 'address'         : $scope.result.address,
                 'city'            : $scope.result.city,
                 'county'          : $scope.result.county,
