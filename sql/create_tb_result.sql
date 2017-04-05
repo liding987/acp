@@ -1,10 +1,12 @@
 create table tb_result (
-    result_id       varchar(40) primary key,
+    result_id       integer primary key auto_increment,
+    user_id         integer references tb_user(user_id),
     address         varchar(250),
     city            varchar(20),
     state           varchar(20),
     country         varchar(20),
     postal_code     varchar(20),
+    radius          integer,
     price           varchar(20),
     link            varchar(250),
     num_gas         integer,
