@@ -22,6 +22,10 @@
         <script type="text/javascript" src="js/user_console_controller.js"></script>
         <script type="text/javascript" src="js/virtual_repeat_controller.js"></script>
         <script type="text/javascript" src="js/initMap.js"></script>
+
+        <!-- data table -->
+        <link rel="stylesheet" href="http://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.css">
+        <script src="http://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.js"></script>
     </head>
 
     <body ng-app="acp" ng-cloak>
@@ -40,12 +44,12 @@
                         <input ng-model="password" type="password" flex>
                     </md-input-container>
 
-                    <md-button md-no-ink class="md-raised md-primary" ng-click="login()" flex>Login</md-button>
-                    <md-button md-no-ink class="md-raised md-primary" ng-click="logout()" flex>Logout</md-button>
-                    <md-button md-no-ink class="md-raised md-primary" ng-click="register()" flex>Register</md-button>
-                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()" flex>Save Result</md-button>
-                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()" flex>Show Results</md-button>
-                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" flex>Apartment Report</md-button>
+                    <md-button md-no-ink class="md-raised md-primary" ng-click="login()">Login</md-button>
+                    <md-button md-no-ink class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+                    <md-button md-no-ink class="md-raised md-primary" ng-click="register()">Register</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()">Save Result</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()">Show Results</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary">Apartment Report</md-button>
                 </md-list-item>
             </md-list>
         </div>
@@ -92,40 +96,35 @@
                 <div id="map" flex="50"></div>
             </md-content>
 
+            <md-content layout-padding laout="column" flex>
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column><span>Price</span></th>
+                                <th md-column><span>Detials</span></th>
+                                <th md-column><span>Rating</span></th>
+                                <th md-column><span>Restaurant</span></th>
+                                <th md-column><span>Supermarket</span></th>
+                                <th md-column><span>Bank</span></th>
+                                <th md-column><span>Gas</span></th>
+                            </tr>
+                        </thead>
 
-            <div>
-                <table>
-                    <tr>
-                        <td>price</td>
-                        <td>{{price}}</td>
-                    </tr>
-                    <tr>
-                        <td>restaurant</td>
-                        <td>{{num_restaurant}}</td>
-                    </tr>
-                    <tr>
-                        <td>supermarket</td>
-                        <td>{{num_supermarket}}</td>
-                    </tr>
-                    <tr>
-                        <td>Bank</td>
-                        <td>{{num_bank}}</td>
-                    </tr>
-                    <tr>
-                        <td>Gas</td>
-                        <td>{{num_gas}}</td>
-                    </tr>
-                    <tr>
-                        <td>Detials</td>
-                        <td><a ng-href="{{link}}">{{link_name}}</a></td>
-                    </tr>
-                    <tr>
-                        <td>Rating</td>
-                        <td>{{rating}}</td>
-                    </tr>
-                </table>
-            </div>
-
+                        <tbody md-body>
+                            <tr md-row>
+                                <td md-cell>{{price}}</td>
+                                <td md-cell><a ng-href="{{link}}">{{link_name}}</a></td>
+                                <td md-cell>{{rating}}</td>
+                                <td md-cell>{{num_restaurant}}</td>
+                                <td md-cell>{{num_supermarket}}</td>
+                                <td md-cell>{{num_bank}}</td>
+                                <td md-cell>{{num_gas}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </md-content>
         </div>
 
 
