@@ -1,4 +1,4 @@
-acp.controller('user_console_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
+acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyService', function($rootScope, $scope, $http, MyService) {
     $scope.username;
     $scope.password;
     $scope.isDisabled = true;
@@ -133,6 +133,7 @@ acp.controller('user_console_controller', ['$scope', '$http', 'MyService', funct
                 console.log('error');
             }).then(function(data, status, headers, config) {
                 console.log($scope.data);
+                $rootScope.$broadcast('results-updated', $scope.data);
             });
         } else {
             console.log("please login your account");

@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/styles.css">
         <script type="text/javascript" src="js/acp.js"></script>
         <script type="text/javascript" src="js/factory.js"></script>
+        <script type="text/javascript" src="js/result_controller.js"></script>
         <script type="text/javascript" src="js/search_controller.js"></script>
         <script type="text/javascript" src="js/user_console_controller.js"></script>
         <script type="text/javascript" src="js/virtual_repeat_controller.js"></script>
@@ -99,7 +100,7 @@
             <md-content layout-padding laout="column" flex>
                 <md-table-container>
                     <table md-table>
-                        <thead md-head>
+                        <thead md-head md-order="query.order" md-on-reorder="logOrder">
                             <tr md-row>
                                 <th md-column><span>Price</span></th>
                                 <th md-column><span>Detials</span></th>
@@ -112,7 +113,8 @@
                         </thead>
 
                         <tbody md-body>
-                            <tr md-row>
+                            <tr md-row md-select="guest" md-on-select="logItem"
+                                md-auto-select="options.autoSelect" ng-repeat="guest in guests.data">
                                 <td md-cell>{{price}}</td>
                                 <td md-cell><a ng-href="{{link}}">{{link_name}}</a></td>
                                 <td md-cell>{{rating}}</td>
@@ -127,7 +129,84 @@
             </md-content>
         </div>
 
+        <div ng-app="acp" ng-controller="result_controller" layout="column" ng-cloak class="md-inline-form">
+            <md-table-container>
+                <table md-table md-row-select="options.rowSelection" ng-model="selected" md-progress="promise">
+                    <thead md-head md-order="query.order" md-on-reorder="logOrder">
+                        <tr md-row>
+                            <th md-column><span>Created</span></th>
+                            <th md-column><span>Price</span></th>
+                            <th md-column><span>Address</span></th>
+                            <th md-column><span>City</span></th>
+                            <!-- <th md-column><span>State</span></th> -->
+                            <!-- <th md-column><span>Postal_code</span></th> -->
+                            <!-- <th md-column><span>Rating</span></th> -->
+                            <th md-column><span>Detials</span></th>
+                            <th md-column><span>Radius(Meter)</span></th>
+                            <th md-column><span>Restaurant</span></th>
+                            <th md-column><span>Supermarket</span></th>
+                            <th md-column><span>Bank</span></th>
+                            <th md-column><span>Gas</span></th>
+                        </tr>
+                    </thead>
 
+                    <tbody md-body>
+                        <tr md-row md-select="result" md-on-select="logItem" md-auto-select="options.autoSelect"
+                            ng-repeat="result in results.data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+
+                            <td md-cell>{{result.created}}</td>
+                            <td md-cell>{{result.price}}</td>
+                            <td md-cell>{{result.address}}</td>
+                            <td md-cell>{{result.city}}</td>
+                            <!-- <td md-cell>{{result.state}}</td> -->
+                            <!-- <td md-cell>{{result.postal_code}}</td> -->
+                            <!-- <td md-cell>{{result.rating}}</td> -->
+                            <td md-cell><a ng-href="{{result.link}}">{{result.link_name}}</a></td>
+                            <td md-cell>{{result.radius}}</td>
+                            <td md-cell>{{result.num_restaurant}}</td>
+                            <td md-cell>{{result.num_supermarket}}</td>
+                            <td md-cell>{{result.num_bank}}</td>
+                            <td md-cell>{{result.num_gas}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+
+            <md-table-pagination md-limit="query.limit" md-page="query.page"
+             md-total="{{results.count}}" md-page-select="options.pageSelector"
+             md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination">
+            </md-table-pagination>
+        </md-content>
+        </div>
+
+
+
+        <!-- <md-content laout="column" flex ng-controller="hotelController">
+        <md-table-container>
+          <table md-table md-row-select="options.rowSelection" ng-model="selected" md-progress="promise">
+            <thead md-head md-order="query.order" md-on-reorder="logOrder">
+              <tr md-row>
+                <th md-column><span>Customer</span></th>
+                <th md-column><span>Check-in-time</span></th>
+                <th md-column><span>Check-out-time</span></th>
+                <th md-column><span>Room Type</span></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row md-select="guest" md-on-select="logItem" md-auto-select="options.autoSelect" ng-repeat="guest in guests.data">
+                <td md-cell>{{guest.customer}}</td>
+                <td md-cell>{{guest.checkInTime}}</td>
+                <td md-cell>{{guest.checkOutTime}}</td>
+                <td md-cell>{{guest.fat}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{guests.count}}" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+      </md-card>
+    </md-content> -->
         <!-- <div ng-app="myApp" ng-controller="search_controller as ctrl" ng-cloak>
             <md-content layout="column">
                 <md-virtual-repeat-container id="vertical-container">
@@ -158,6 +237,46 @@
 
             <p>address: <input type="text" ng-model="address" placeholder="Apartment address"></p>
             <p>Zip Code: <input type="text" ng-model="zip_code" placeholder="Zip code"></p>
+        </div> -->
+        <!-- <div ng-app="acp" ng-controller="result_controller" layout="column" ng-cloak class="md-inline-form">
+            <md-table-container>
+                <table md-table md-row-select="options.rowSelection" ng-model="selected" md-progress="promise">
+                    <thead md-head>
+                        <tr md-row>
+                            <th md-column><span>Price</span></th>
+                            <th md-column><span>Address</span></th>
+                            <th md-column><span>City</span></th>
+                            <th md-column><span>State</span></th>
+                            <th md-column><span>Postal_code</span></th>
+                            <th md-column><span>Rating</span></th>
+                            <th md-column><span>Detials</span></th>
+                            <th md-column><span>Radius(Meter)</span></th>
+                            <th md-column><span>Restaurant</span></th>
+                            <th md-column><span>Supermarket</span></th>
+                            <th md-column><span>Bank</span></th>
+                            <th md-column><span>Gas</span></th>
+                        </tr>
+                    </thead>
+
+                    <tbody md-body>
+                        <tr md-row>
+                            <td md-cell>{{price}}</td>
+                            <td md-cell>{{address}}</td>
+                            <td md-cell>{{city}}</td>
+                            <td md-cell>{{state}}</td>
+                            <td md-cell>{{postal_code}}</td>
+                            <td md-cell>{{rating}}</td>
+                            <td md-cell><a ng-href="{{link}}">{{link_name}}</a></td>
+                            <td md-cell>{{radius}}</td>
+                            <td md-cell>{{num_restaurant}}</td>
+                            <td md-cell>{{num_supermarket}}</td>
+                            <td md-cell>{{num_bank}}</td>
+                            <td md-cell>{{num_gas}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+        </md-content>
         </div> -->
     </body>
 

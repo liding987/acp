@@ -17,6 +17,7 @@ if ($con->connect_error) {
 
 $sql = <<<SQL
     select result_id,
+           created,
            address,
            city,
            state,
@@ -25,6 +26,7 @@ $sql = <<<SQL
            radius,
            price,
            link,
+           'Zillow' as link_name,
            num_gas,
            num_bank,
            num_supermarket,

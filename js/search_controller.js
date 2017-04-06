@@ -229,7 +229,7 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             }
             catch(err) {
                 $scope.link_name = "not available";
-                $scope.price = "not available";
+                $scope.price     = "not available";
             }
 
             var links         = results.getElementsByTagName("result")[0].childNodes[1];
@@ -285,5 +285,10 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         $scope.link = "";
     };
 
+    // $scope.$watch('MyService.user.results', function() {
+    //     // alert('hey, user.results has changed!');
+    //     console.log("results: " + MyService.user.results);
+    // });
+    // console.log("results: " + MyService.user.results);
+
 }]);
-// });
