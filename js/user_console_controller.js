@@ -94,7 +94,6 @@ acp.controller('user_console_controller', ['$scope', '$http', 'MyService', funct
                 'place_id'        : $scope.result.place_id
             }
 
-            // console.log(data);
             $http({
                 url: 'php/save_result.php',
                 method: "POST",
@@ -111,6 +110,32 @@ acp.controller('user_console_controller', ['$scope', '$http', 'MyService', funct
             });
         } else {
             console.log("result cannot be empty");
+        }
+    }
+
+    $scope.show_results = function() {
+        $scope.user = MyService.user;
+        if ($scope.user.user_id) {
+            var data = {
+                'user_id' : $scope.user.user_id
+            }
+
+            $http({
+                url: 'php/show_results.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                console.log($scope.data);
+            });
+        } else {
+            console.log("please login your account");
         }
     }
 
