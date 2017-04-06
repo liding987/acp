@@ -25,51 +25,34 @@
     </head>
 
     <body ng-app="acp" ng-cloak>
+
         <div ng-app="acp" ng-controller="user_console_controller" layout="column" ng-cloak class="md-inline-form">
-            <md-content layout-gt-sm="row" layout-padding>
+            <md-list flex-offset="0" layout-padding>
+                <md-list-item layout-align="start center">
 
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()">Save Result</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()">Show Results</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button ng-disabled="isDisabled" class="md-raised md-primary">Apartment Report</md-button>
-                    </md-menu-item>
-                </md-menu-content>
-
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-button md-no-ink class="md-primary" ng-click="login()">login</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button md-no-ink class="md-primary" ng-click="logout()">logout</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button md-no-ink class="md-primary" ng-click="register()">register</md-button>
-                    </md-menu-item>
-                </md-menu-content>
-
-                <div>
-                    <md-input-container>
+                    <md-input-container md-no-float flex>
                         <label>Username</label>
-                        <input ng-model="username" type="email">
+                        <input ng-model="username" type="email" flex>
                     </md-input-container>
 
-                    <md-input-container>
+                    <md-input-container md-no-float flex>
                         <label>Password</label>
-                        <input ng-model="password" type="password">
+                        <input ng-model="password" type="password" flex>
                     </md-input-container>
-                </div>
 
-            </md-content>
+                    <md-button md-no-ink class="md-raised md-primary" ng-click="login()" flex>Login</md-button>
+                    <md-button md-no-ink class="md-raised md-primary" ng-click="logout()" flex>Logout</md-button>
+                    <md-button md-no-ink class="md-raised md-primary" ng-click="register()" flex>Register</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()" flex>Save Result</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()" flex>Show Results</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" flex>Apartment Report</md-button>
+                </md-list-item>
+            </md-list>
         </div>
 
         <div ng-app="acp" ng-controller="search_controller" layout="column" ng-cloak class="md-inline-form">
-            <md-content layout-padding>
-                <div>
+            <md-content flex-offset="0" layout-padding layout="row">
+                <div flex="50">
                     <md-input-container class="md-block">
                         <label>Address</label>
                         <input ng-model="address">
@@ -96,17 +79,21 @@
                             <label>Radius (Meter)</label>
                             <input ng-model="radius" placeholder="1000">
                         </md-input-container>
+                    </div>
 
+                    <div layout="column" layout-sm="column" layout-align="center center" layout-wrap="">
+                        <section>
+                            <md-button class="md-raised" ng-click="search()">search</md-button>
+                            <md-button class="md-raised md-primary" ng-click="clearFunc()">clear</md-button>
+                        </section>
                     </div>
                 </div>
+
+                <div id="map" flex="50"></div>
             </md-content>
 
-            <div layout="column" layout-sm="column" layout-align="center center" layout-wrap="">
-                <section>
-                    <md-button class="md-raised" ng-click="search()">search</md-button>
-                    <md-button class="md-raised md-primary" ng-click="clearFunc()">clear</md-button>
-                </section>
 
+            <div>
                 <table>
                     <tr>
                         <td>price</td>
@@ -138,7 +125,9 @@
                     </tr>
                 </table>
             </div>
+
         </div>
+
 
         <!-- <div ng-app="myApp" ng-controller="search_controller as ctrl" ng-cloak>
             <md-content layout="column">
@@ -193,7 +182,4 @@
 
     <p>end</p> -->
 
-    <body>
-        <div id="map"></div>
-    </body>
 </html>
