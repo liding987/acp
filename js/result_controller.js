@@ -35,7 +35,8 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
     }
 
     $scope.delete_result = function() {
-        if ($scope.selected[0]) {
+        console.log("user: " + MyService.user.user_id);
+        if ($scope.selected[0] && MyService.user.user_id !== -1) {
             var data = {
                 'result_id' : $scope.selected[0].result_id
             }

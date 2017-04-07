@@ -42,6 +42,7 @@ acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyS
         $scope.isDisabled = true;
         $scope.username = "";
         $scope.password = "";
+        MyService.user.user_id = -1;
     }
 
     $scope.register = function() {
