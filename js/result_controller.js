@@ -33,4 +33,58 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
         console.log('page: ', page);
         console.log('limit: ', limit);
     }
+
+    $scope.delete_result = function() {
+        if ($scope.selected[0]) {
+            var data = {
+                'result_id' : $scope.selected[0].result_id
+            }
+
+            $http({
+                url: 'php/delete_result.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                $scope.show_results();
+            });
+        } else {
+            console.log("No result is selected");
+        }
+    }
+
+    $scope.show_results = function() {
+        $scope.user = MyService.user;
+        if ($scope.user.user_id) {
+            var data = {
+                'user_id' : $scope.user.user_id
+            }
+
+            $http({
+                url: 'php/show_results.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                $scope.results = {
+                    "count": $scope.data.length,
+                    "data": $scope.data
+                };
+            });
+        } else {
+            console.log("please login your account");
+        }
+    }
 }]);
