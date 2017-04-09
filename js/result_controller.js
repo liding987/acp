@@ -2,7 +2,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
 
     $scope.selected = [];
     $scope.results  = {};
-
+    $scope.url;
     $scope.options = {
       //autoSelect: true,
       boundaryLinks: true,
@@ -13,7 +13,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
 
     $scope.query = {
         order: 'created',
-        limit: 5,
+        limit: 3,
         page: 1
     };
 
@@ -83,6 +83,33 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                     "count": $scope.data.length,
                     "data": $scope.data
                 };
+            });
+        } else {
+            console.log("please login your account");
+        }
+    }
+
+    $scope.results_report = function() {
+        if (MyService.user.user_id !== -1) {
+            var data = {
+                'user_id' : MyService.user.user_id
+            }
+
+            console.log(MyService.user.user_id);
+
+            $http({
+                url: 'php/results_report.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                $scope.url = $scope.data;
             });
         } else {
             console.log("please login your account");

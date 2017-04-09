@@ -1,7 +1,8 @@
 acp.factory('MyService', function() {
     return {
         user: {
-            user_id: -1
+            user_id: -1,
+            login: false
         },
         result: {
             isSet: false,
