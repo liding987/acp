@@ -110,6 +110,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 console.log('error');
             }).then(function(data, status, headers, config) {
                 $scope.url = $scope.data;
+                window.open($scope.url, '_blank', '');
             });
         } else {
             console.log("please login your account");

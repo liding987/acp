@@ -41,6 +41,15 @@ if( !( -e $dir and -d $dir ) )
     }
 }
 
+my $user_dir = "../tmp/$user";
+
+if( !( -e $user_dir and -d $user_dir ) )
+{
+    unless( mkdir $user_dir ) {
+        die "Unable to create $user_dir\n";
+    }
+}
+
 #######################
 # Connect to Database #
 #######################
@@ -59,12 +68,11 @@ my $dbh = DBI->connect($dsn, $username, $password);
 my $timestamp  = strftime("%Y-%m-%d_%H-%M-%S", localtime );
 my $basename   = 'results_report';
 my $file_name  = "${user}_${basename}_${timestamp}";
-my $file       = "$dir/$file_name.csv";
+my $file       = "$dir/$user/$file_name.csv";
 
 ###############
 # Process CSV #
 ###############
-my $weight_dir = 0;
 my $old_file;
 my $fh;
 my @rows;
