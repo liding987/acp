@@ -241,7 +241,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
                 $scope.link = link;
             }
             catch(err) {
-                // $scope.link = "not available";
                 $scope.link_name =  "not available";
             }
 
@@ -284,11 +283,5 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         $scope.link_name = "";
         $scope.link = "";
     };
-
-    // $scope.$watch('MyService.user.results', function() {
-    //     // alert('hey, user.results has changed!');
-    //     console.log("results: " + MyService.user.results);
-    // });
-    // console.log("results: " + MyService.user.results);
 
 }]);
