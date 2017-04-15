@@ -26,6 +26,7 @@ acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyS
                     $scope.enable_button();
                 }
                 MyService.user.user_id = $scope.data;
+                $scope.show_results();
             });
         } else {
             console.log("username and password cannot be empty");
