@@ -29,10 +29,18 @@
 
     <body ng-app="acp" ng-cloak>
 
-        <div ng-app="acp" ng-controller="user_console_controller" layout="column" ng-cloak class="md-inline-form">
-            <md-list flex-offset="0" layout-padding>
-                <md-list-item layout-align="start center">
+        <div>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2 md-truncate flex>Apartment Comparator</h2>
+                </div>
+            </md-toolbar>
+        </div>
 
+        <div ng-app="acp" ng-controller="user_console_controller" layout="column" ng-cloak class="md-inline-form">
+            <md-list flex-offset="50" layout-padding>
+                <md-list-item layout-align="start center">
+                    <!-- <p flex="10"></p> -->
                     <md-input-container md-no-float flex>
                         <label>Username</label>
                         <input ng-model="username" type="email" flex>
@@ -44,11 +52,11 @@
                     </md-input-container>
 
                     <md-button md-no-ink class="md-raised md-primary" ng-click="login()">Login</md-button>
-                    <md-button md-no-ink class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+                    <md-button ng-disabled="isDisabled" md-no-ink class="md-raised md-primary" ng-click="logout()">Logout</md-button>
                     <md-button md-no-ink class="md-raised md-primary" ng-click="register()">Register</md-button>
-                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()">Save Result</md-button>
-                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()">Show Results</md-button>
-                    <md-button ng-disabled="isDisabled" class="md-raised md-primary">Apartment Report</md-button>
+                    <!-- <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="save_result()">Save Result</md-button>
+                    <md-button ng-disabled="isDisabled" class="md-raised md-primary" ng-click="show_results()">Show Results</md-button> -->
+                    <!-- <md-button ng-disabled="isDisabled" class="md-raised md-primary">Apartment Report</md-button> -->
                 </md-list-item>
             </md-list>
         </div>
@@ -128,6 +136,7 @@
 
         <div ng-app="acp" ng-controller="result_controller" layout="column" ng-cloak class="md-inline-form" layout-padding flex>
         <md-content>
+            <md-button md-no-ink class="md-raised md-primary" ng-click="save_result()">Save Result</md-button>
             <md-button md-no-ink class="md-raised md-primary" ng-click="delete_result()">Delete Result</md-button>
             <md-button md-no-ink class="md-raised md-primary" ng-click="results_report()">Results Report</md-button>
 
