@@ -35,7 +35,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 data: data
             })
             .success(function(data, status, headers, config) {
-                console.log(status + ' - ' + data);
+                console.log(status);
                 $scope.data = data;
             })
             .error(function(data, status, headers, config) {
@@ -69,7 +69,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 data: data
             })
             .success(function(data, status, headers, config) {
-                console.log(status + ' - ' + data);
+                console.log(status);
                 $scope.data = data;
             })
             .error(function(data, status, headers, config) {
@@ -159,7 +159,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 data: data
             })
             .success(function(data, status, headers, config) {
-                console.log(status + ' - ' + data);
+                console.log(status);
                 $scope.data = data;
             })
             .error(function(data, status, headers, config) {
@@ -194,7 +194,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 'state'           : $scope.result.state,
                 'postal_code'     : $scope.result.postal_code,
                 'radius'          : $scope.result.radius,
-                'price'           : $scope.result.price,
+                // 'price'           : $scope.result.price,
                 'link'            : $scope.result.link,
                 'num_gas'         : $scope.result.num_gas,
                 'num_bank'        : $scope.result.num_bank,
@@ -212,7 +212,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 data: data
             })
             .success(function(data, status, headers, config) {
-                console.log(status + ' - ' + data);
+                console.log(status);
                 $scope.data = data;
             })
             .error(function(data, status, headers, config) {
