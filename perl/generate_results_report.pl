@@ -87,15 +87,14 @@ $row->[3] = 'State';
 $row->[4] = 'Country';
 $row->[5] = 'Postal_code';
 $row->[6] = 'Radius (Meter)';
-$row->[7] = 'Price';
-$row->[8] = 'Detail';
-$row->[9] = 'Gas Station';
-$row->[10] = 'Bank';
-$row->[11] = 'Supermarket';
-$row->[12] = 'Restaurant';
-$row->[13] = 'Rating';
-$row->[14] = 'Latitude';
-$row->[15] = 'Longitude';
+$row->[7] = 'Detail';
+$row->[8] = 'Gas Station';
+$row->[9] = 'Bank';
+$row->[10] = 'Supermarket';
+$row->[11] = 'Restaurant';
+$row->[12] = 'Rating';
+$row->[13] = 'Latitude';
+$row->[14] = 'Longitude';
 push @rows, $row;
 
 my $query = <<"END_SQL";
@@ -106,7 +105,6 @@ my $query = <<"END_SQL";
            country,
            postal_code,
            radius,
-           price,
            link,
            num_gas,
            num_bank,
@@ -133,15 +131,14 @@ while (my $ref = $sth->fetchrow_hashref()) {
     $row->[4] = $ref->{'country'};
     $row->[5] = $ref->{'postal_code'};
     $row->[6] = $ref->{'radius'};
-    $row->[7] = $ref->{'price'};
-    $row->[8] = $ref->{'link'};
-    $row->[9] = $ref->{'num_gas'};
-    $row->[10] = $ref->{'num_bank'};
-    $row->[11] = $ref->{'num_supermarket'};
-    $row->[12] = $ref->{'num_restaurant'};
-    $row->[13] = $ref->{'rating'};
-    $row->[14] = $ref->{'lat'};
-    $row->[15] = $ref->{'lng'};
+    $row->[7] = $ref->{'link'};
+    $row->[8] = $ref->{'num_gas'};
+    $row->[9] = $ref->{'num_bank'};
+    $row->[10] = $ref->{'num_supermarket'};
+    $row->[11] = $ref->{'num_restaurant'};
+    $row->[12] = $ref->{'rating'};
+    $row->[13] = $ref->{'lat'};
+    $row->[14] = $ref->{'lng'};
     push @rows, $row;
 }
 $sth->finish;
