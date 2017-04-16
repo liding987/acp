@@ -64,6 +64,11 @@
         <div ng-app="acp" ng-controller="search_controller" layout="column" ng-cloak class="md-inline-form">
             <md-content flex-offset="0" layout-padding layout="row">
                 <div flex="50">
+
+                    <md-checkbox ng-model="allow_to_collect_data">
+                        Allow the system to collect your search queries
+                    </md-checkbox>
+
                     <md-input-container class="md-block">
                         <label>Address</label>
                         <input ng-model="address">

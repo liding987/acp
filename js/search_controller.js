@@ -25,7 +25,10 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
     $scope.google_place_key;
     $scope.zillow_key;
 
+    $scope.allow_to_collect_data = true;
+
     $scope.search = function() {
+        $scope.collect_data();
         $scope.getAddress();
         $scope.getZillow();
 
@@ -75,8 +78,34 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.zillow_key = $scope.data;
         });
     }
-
     $scope.getAPIkey();
+
+    $scope.collect_data = function() {
+        if ($scope.allow_to_collect_data == true) {
+            var data = {
+                'address'     : $scope.address,
+                'city'        : $scope.city,
+                'state'       : $scope.state,
+                'postal_code' : $scope.postal_code,
+                'radius'      : $scope.radius
+            }
+
+            $http({
+                url: 'php/collect_data.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config){
+                console.log($scope.data);
+            });
+        }
+    }
 
     $scope.getAddress = function() {
         var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=";
