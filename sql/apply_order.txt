@@ -2,3 +2,4 @@ create_database_acp.sql
 create_tb_user.sql
 create_tb_result.sql
 create_tb_api_key.sql
+create_tb_search.sql
