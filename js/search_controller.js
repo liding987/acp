@@ -1,5 +1,4 @@
 acp.controller('search_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
-
     $scope.address = "7000 Briarcliff Gables Cir NE";
     $scope.city = "Atlanta";
     $scope.state = "GA";
@@ -23,11 +22,8 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
     $scope.place_id;
     $scope.reference;
 
-    // $scope.items = [];
-    // for (var i = 0; i < 20; i++) {
-    //     console.log(i);
-    //     $scope.items.push(i);
-    // }
+    $scope.google_place_key;
+    $scope.zillow_key;
 
     $scope.search = function() {
         $scope.getAddress();
@@ -38,11 +34,55 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         }, 3000);
     }
 
+    $scope.getAPIkey = function() {
+        // get google place key
+        var data = {
+            'api_name' : "google_place_api"
+        }
+
+        $http({
+            url: 'php/get_api_key.php',
+            method: "POST",
+            data: data
+        })
+        .success(function(data, status, headers, config) {
+            console.log(status + ' - get API key');
+            $scope.data = data;
+        })
+        .error(function(data, status, headers, config) {
+            console.log('error');
+        }).then(function(data, status, headers, config) {
+            $scope.google_place_key = $scope.data;
+        });
+
+        // get zillow key
+        var data = {
+            'api_name' : "zillow_api"
+        }
+
+        $http({
+            url: 'php/get_api_key.php',
+            method: "POST",
+            data: data
+        })
+        .success(function(data, status, headers, config) {
+            console.log(status + ' - get API key');
+            $scope.data = data;
+        })
+        .error(function(data, status, headers, config) {
+            console.log('error');
+        }).then(function(data, status, headers, config) {
+            $scope.zillow_key = $scope.data;
+        });
+    }
+
+    $scope.getAPIkey();
+
     $scope.getAddress = function() {
         var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=";
         var address = $scope.address + "+" + $scope.city + "+" + $scope.state + "+" + $scope.postal_code;
         address = address.replace(/\s+/g, '+').toLowerCase();
-        var api_key = "&key=AIzaSyCTTv7h0qKA3oi8ruS47R1DNIJIgpmvN3g";
+        var api_key = '&key=' + $scope.google_place_key;
 
         $http({
             url: url + address + api_key,
@@ -54,7 +94,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             var json = $scope.data;
-            // console.log(json);
             for(i = 0; i < json.results.length; i++) {
                 // console.log($scope.data);
                 // console.log(json.results[i].formatted_address);
@@ -98,7 +137,7 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
     $scope.getPlaceDetails = function() {
         var url = "https://maps.googleapis.com/maps/api/place/details/json?";
         var place = "placeid=" + $scope.place_id;
-        var api_key = "&key=AIzaSyCTTv7h0qKA3oi8ruS47R1DNIJIgpmvN3g";
+        var api_key = '&key=' + $scope.google_place_key;
 
         $http({
             url: url + place + api_key,
@@ -141,13 +180,12 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
     $scope.getNearby = function() {
         var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
         var location    = "location=" + $scope.lat +","+ $scope.lng;
-        console.log(location);
         var radius      = "&radius=" + $scope.radius;
         var restaurant  = "&type=restaurant";
         var supermarket = "&type=supermarket";
         var bank        = "&type=bank";
         var gas         = "&type=gas+station";
-        var api_key     = "&key=AIzaSyCTTv7h0qKA3oi8ruS47R1DNIJIgpmvN3g";
+        var api_key     = '&key=' + $scope.google_place_key;
 
         $http({
             url: url + location + radius + restaurant + api_key,
@@ -201,14 +239,11 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.num_gas = $scope.data.results.length;
             console.log("gas station: " + $scope.data.results.length);
         });
-        // console.log($scope.data);
     }
 
     $scope.getZillow = function() {
-        var url = "http://www.zillow.com/webservice/GetSearchResults.htm?";
-        var ZWSID = "zws-id=X1-ZWz1fnfcg506bv_4ok8b";
-        // $scope.place = $scope.address.replace(/\s+/g, '+').toLowerCase();
-        // var address = "&address=3078+Clairmont+Road+Ne";
+        var url           = "http://www.zillow.com/webservice/GetSearchResults.htm?";
+        var ZWSID         = "zws-id=" + $scope.zillow_key;
         var address       = "&address=" + $scope.address.replace(/\s+/g, '+').toLowerCase();
         var citystatezip  = "&citystatezip=Atlanta%2C+GA";
         var rentzestimate = "&rentzestimate=true";
@@ -251,20 +286,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             catch(err) {
                 $scope.price = "not available";
             }
-
-
-            // console.log("amount: " + amount);
-            // if (amount != "undefined") {
-            //     $scope.price = "$" + amount + "+ /mo";
-            // } else {
-            //     $scope.price = "not available";
-            // }
-
-            // if (link != "undefined") {
-            //     $scope.link = link;
-            // } else {
-            //     $scope.link = "not available";
-            // }
         });
     }
 
@@ -283,5 +304,4 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         $scope.link_name = "";
         $scope.link = "";
     };
-
 }]);
