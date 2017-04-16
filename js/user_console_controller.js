@@ -134,7 +134,7 @@ acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyS
             .error(function(data, status, headers, config) {
                 console.log('error');
             }).then(function(data, status, headers, config) {
-                console.log($scope.data);
+                // console.log($scope.data);
                 $rootScope.$broadcast('results-updated', $scope.data);
             });
         } else {

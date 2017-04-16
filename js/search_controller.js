@@ -95,35 +95,38 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         }).then(function(data, status, headers, config) {
             var json = $scope.data;
             for(i = 0; i < json.results.length; i++) {
-                // console.log($scope.data);
-                // console.log(json.results[i].formatted_address);
                 $scope.place = json.results[i].formatted_address;
                 $scope.lat   = json.results[i].geometry.location.lat;
                 $scope.lng   = json.results[i].geometry.location.lng;
                 $scope.place_id = json.results[i].place_id;
-                // $scope.reference = json.results[i].reference;
             }
             console.log($scope.lat);
             console.log($scope.lng);
             $scope.getNearby();
-            $scope.getRating();
+            $scope.getLocation();
         });
     };
 
-    $scope.getRating = function() {
+    $scope.getLocation = function() {
         var request = {
             placeId: $scope.place_id
         };
+
         var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: $scope.lat, lng: $scope.lng},
             zoom: 15
         });
+
+        var marker = new google.maps.Marker({
+            position: {lat: $scope.lat, lng: $scope.lng},
+            map: map
+        });
+
         var service = new google.maps.places.PlacesService(map);
 
         service.getDetails(request, function(place, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log(google.maps.places);
-                // console.log(place.reviews);
+                console.log("google maps places: " + google.maps.places);
                 var extraordinary = google.maps.places.RatingLevel.EXTRAORDINARY;
                 var excellent     = google.maps.places.RatingLevel.EXCELLENT;
                 var very_good     = google.maps.places.RatingLevel.VERY_GOOD;
@@ -148,7 +151,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         }).error(function(data, status, headers, config) {
             $scope.status = status;
         }).then(function(data, status, headers, config) {
-            console.log("getPlaceDetails()");
             var street_number = $scope.data.result.address_components[0].short_name;
             var street_name   = $scope.data.result.address_components[1].short_name;
             var city          = $scope.data.result.address_components[2].short_name;
@@ -213,7 +215,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             console.log("supermarket: "  + $scope.data.results.length);
         });
 
-        console.log(url + location + radius + bank + api_key);
         $http({
             url: url + location + radius + bank + api_key,
             method: "GET",
