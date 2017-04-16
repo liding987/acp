@@ -1,4 +1,5 @@
-acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService', function($rootScope, $scope, $http, MyService) {
+acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService', '$mdDialog',
+                function($rootScope, $scope, $http, MyService, $mdDialog) {
 
     $scope.selected = [];
     $scope.results  = {};
@@ -34,8 +35,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
         console.log('limit: ', limit);
     }
 
-    $scope.delete_result = function() {
-        console.log("user: " + MyService.user.user_id);
+    $scope.delete_result = function(ev) {
         if ($scope.selected[0] && MyService.user.user_id !== -1) {
             var data = {
                 'result_id' : $scope.selected[0].result_id
@@ -56,7 +56,16 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 $scope.show_results();
             });
         } else {
-            console.log("No result is selected");
+            $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('No result is selected.')
+                .ariaLabel('Alert Dialog')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
         }
     }
 
@@ -89,7 +98,7 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
     //     }
     // }
 
-    $scope.results_report = function() {
+    $scope.results_report = function(ev) {
         if (MyService.user.user_id !== -1) {
             var data = {
                 'user_id' : MyService.user.user_id
@@ -113,14 +122,23 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 window.open($scope.url, '_blank', '');
             });
         } else {
-            console.log("please login your account");
+            $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('Please login your account.')
+                .ariaLabel('Alert Dialog')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
         }
     }
 
-    $scope.save_result = function() {
+    $scope.save_result = function(ev) {
         $scope.result = MyService.result;
         $scope.user   = MyService.user;
-        if ($scope.result.isSet === true && $scope.user.user_id) {
+        if ($scope.result.isSet === true && $scope.user.user_id !== -1) {
             var data = {
                 'user_id'         : $scope.user.user_id,
                 'address'         : $scope.result.address,
@@ -157,7 +175,16 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 $scope.show_results();
             });
         } else {
-            console.log("result cannot be empty");
+            $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('Cannot save the result.')
+                .ariaLabel('Alert Dialog')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
         }
     }
 

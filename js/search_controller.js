@@ -95,13 +95,11 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         }).then(function(data, status, headers, config) {
             var json = $scope.data;
             for(i = 0; i < json.results.length; i++) {
-                $scope.place = json.results[i].formatted_address;
-                $scope.lat   = json.results[i].geometry.location.lat;
-                $scope.lng   = json.results[i].geometry.location.lng;
+                $scope.place    = json.results[i].formatted_address;
+                $scope.lat      = json.results[i].geometry.location.lat;
+                $scope.lng      = json.results[i].geometry.location.lng;
                 $scope.place_id = json.results[i].place_id;
             }
-            console.log($scope.lat);
-            console.log($scope.lng);
             $scope.getNearby();
             $scope.getLocation();
         });
@@ -126,7 +124,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
 
         service.getDetails(request, function(place, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log("google maps places: " + google.maps.places);
                 var extraordinary = google.maps.places.RatingLevel.EXTRAORDINARY;
                 var excellent     = google.maps.places.RatingLevel.EXCELLENT;
                 var very_good     = google.maps.places.RatingLevel.VERY_GOOD;
@@ -199,7 +196,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_restaurant = $scope.data.results.length;
-            console.log("restaurant: "  + $scope.data.results.length);
         });
 
         $http({
@@ -212,7 +208,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_supermarket = $scope.data.results.length;
-            console.log("supermarket: "  + $scope.data.results.length);
         });
 
         $http({
@@ -225,7 +220,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_bank = $scope.data.results.length;
-            console.log("bank: "  + $scope.data.results.length);
         });
 
         $http({
@@ -238,7 +232,6 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
             $scope.status = status;
         }).then(function(data, status, headers, config) {
             $scope.num_gas = $scope.data.results.length;
-            console.log("gas station: " + $scope.data.results.length);
         });
     }
 
