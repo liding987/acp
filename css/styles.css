@@ -1,15 +1,7 @@
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
 #map {
   height: 30%;
   width: 30%;
 }
-/* Optional: Makes the sample page fill the window. */
-/*html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}*/
 
 .md-button {
     width: 120px;
@@ -25,23 +17,3 @@
 md-input-container .md-errors-spacer{
     min-height: 0px !important;
 }
-
-.virtualRepeatdemoVerticalUsage #vertical-container {
-  height: 292px;
-  width: 100%;
-  max-width: 400px; }
-
-.virtualRepeatdemoVerticalUsage .repeated-item {
-  border-bottom: 1px solid #ddd;
-  box-sizing: border-box;
-  height: 40px;
-  padding-top: 10px; }
-
-.virtualRepeatdemoVerticalUsage md-content {
-  margin: 16px; }
-
-.virtualRepeatdemoVerticalUsage md-virtual-repeat-container {
-  border: solid 1px grey; }
-
-.virtualRepeatdemoVerticalUsage .md-virtual-repeat-container .md-virtual-repeat-offsetter div {
-  padding-left: 16px; }
