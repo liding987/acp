@@ -1,9 +1,10 @@
-acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyService', function($rootScope, $scope, $http, MyService) {
+acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyService', '$mdDialog',
+                function($rootScope, $scope, $http, MyService, $mdDialog, $mdToast) {
     $scope.username;
     $scope.password;
     $scope.isDisabled = true;
 
-    $scope.login = function() {
+    $scope.login = function(ev) {
         if (typeof $scope.username != "undefined" && typeof $scope.password != "undefined") {
             var data = {
                 'username' : $scope.username,
@@ -29,7 +30,16 @@ acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyS
                 $scope.show_results();
             });
         } else {
-            console.log("username and password cannot be empty");
+            $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('Username and password cannot be empty.')
+                .ariaLabel('Alert Dialog')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
         }
     }
 
@@ -46,7 +56,7 @@ acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyS
         MyService.user.user_id = -1;
     }
 
-    $scope.register = function() {
+    $scope.register = function(ev) {
         if (typeof $scope.username != "undefined" && typeof $scope.password != "undefined") {
             var data = {
                 'username' : $scope.username,
@@ -66,9 +76,28 @@ acp.controller('user_console_controller', ['$rootScope', '$scope', '$http', 'MyS
                 console.log('error');
             }).then(function(data, status, headers, config){
                 console.log($scope.data);
+                $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Congratulation!')
+                    .textContent('Registered successfully.')
+                    .ariaLabel('Alert Dialog')
+                    .ok('Got it!')
+                    .targetEvent(ev)
+                );
             });
         } else {
-            console.log("username and password cannot be empty");
+            $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('Username and password cannot be empty.')
+                .ariaLabel('Alert Dialog')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
         }
     }
 
