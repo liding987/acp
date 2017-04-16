@@ -1,4 +1,6 @@
-acp.controller('search_controller', ['$scope', '$http', 'MyService', function($scope, $http, MyService) {
+acp.controller('search_controller', ['$rootScope', '$scope', '$http', 'MyService',
+                function($rootScope, $scope, $http, MyService) {
+
     $scope.address = "7000 Briarcliff Gables Cir NE";
     $scope.city = "Atlanta";
     $scope.state = "GA";
@@ -327,4 +329,14 @@ acp.controller('search_controller', ['$scope', '$http', 'MyService', function($s
         $scope.link_name = "";
         $scope.link = "";
     };
+
+    $rootScope.$on('check_price', function(event, data) {
+        $scope.data        = data;
+        $scope.address     = $scope.data[0].address;
+        $scope.city        = $scope.data[0].city;
+        $scope.state       = $scope.data[0].state;
+        $scope.postal_code = $scope.data[0].postal_code;
+        $scope.radius      = $scope.data[0].radius;
+        $scope.search();
+    });
 }]);

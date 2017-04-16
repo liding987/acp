@@ -14,25 +14,47 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
 
     $scope.query = {
         order: 'created',
-        limit: 3,
+        limit: 5,
         page: 1
-    };
-
-    $rootScope.$on('results-updated', function(event, data) {
-        $scope.data = data;
-        $scope.reload_results(data);
-    });
-
-    $scope.reload_results = function(data) {
-        $scope.results = {
-            "count": $scope.data.length,
-            "data": $scope.data
-        };
     };
 
     $scope.logPagination = function (page, limit) {
         console.log('page: ', page);
         console.log('limit: ', limit);
+    }
+
+    $scope.check_price = function(ev) {
+        if ($scope.selected[0] && MyService.user.user_id !== -1) {
+            var data = {
+                'result_id' : $scope.selected[0].result_id
+            }
+
+            $http({
+                url: 'php/select_result.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status + ' - ' + data);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                $rootScope.$broadcast('check_price', $scope.data);
+            });
+        } else {
+            $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('No result is selected.')
+                .ariaLabel('Alert Dialog')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
+        }
     }
 
     $scope.delete_result = function(ev) {
@@ -66,6 +88,33 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
                 .ok('Got it!')
                 .targetEvent(ev)
             );
+        }
+    }
+
+    $scope.show_results = function() {
+        $scope.user = MyService.user;
+        if ($scope.user.user_id) {
+            var data = {
+                'user_id' : $scope.user.user_id
+            }
+
+            $http({
+                url: 'php/show_results.php',
+                method: "POST",
+                data: data
+            })
+            .success(function(data, status, headers, config) {
+                console.log(status);
+                $scope.data = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('error');
+            }).then(function(data, status, headers, config) {
+                // console.log($scope.data);
+                $rootScope.$broadcast('results-updated', $scope.data);
+            });
+        } else {
+            console.log("Please login your account");
         }
     }
 
@@ -103,8 +152,6 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
             var data = {
                 'user_id' : MyService.user.user_id
             }
-
-            console.log(MyService.user.user_id);
 
             $http({
                 url: 'php/results_report.php',
@@ -188,30 +235,15 @@ acp.controller('result_controller', ['$rootScope', '$scope', '$http', 'MyService
         }
     }
 
-    $scope.show_results = function() {
-        $scope.user = MyService.user;
-        if ($scope.user.user_id) {
-            var data = {
-                'user_id' : $scope.user.user_id
-            }
+    $scope.reload_results = function(data) {
+        $scope.results = {
+            "count": $scope.data.length,
+            "data": $scope.data
+        };
+    };
 
-            $http({
-                url: 'php/show_results.php',
-                method: "POST",
-                data: data
-            })
-            .success(function(data, status, headers, config) {
-                console.log(status + ' - ' + data);
-                $scope.data = data;
-            })
-            .error(function(data, status, headers, config) {
-                console.log('error');
-            }).then(function(data, status, headers, config) {
-                console.log($scope.data);
-                $rootScope.$broadcast('results-updated', $scope.data);
-            });
-        } else {
-            console.log("please login your account");
-        }
-    }
+    $rootScope.$on('results-updated', function(event, data) {
+        $scope.data = data;
+        $scope.reload_results(data);
+    });
 }]);
