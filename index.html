@@ -157,10 +157,10 @@
                     <thead md-head md-order="query.order" md-on-reorder="logOrder">
                         <tr md-row>
                             <th md-column><span>Created</span></th>
-                            <th md-column><span>Price</span></th>
+                            <!-- <th md-column><span>Price</span></th> -->
                             <th md-column><span>Address</span></th>
                             <th md-column><span>City</span></th>
-                            <!-- <th md-column><span>State</span></th> -->
+                            <th md-column><span>State</span></th>
                             <!-- <th md-column><span>Postal_code</span></th> -->
                             <!-- <th md-column><span>Rating</span></th> -->
                             <th md-column><span>Detials</span></th>
@@ -177,10 +177,10 @@
                             ng-repeat="result in results.data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
 
                             <td md-cell>{{result.created}}</td>
-                            <td md-cell>{{result.price}}</td>
+                            <!-- <td md-cell>{{result.price}}</td> -->
                             <td md-cell>{{result.address}}</td>
                             <td md-cell>{{result.city}}</td>
-                            <!-- <td md-cell>{{result.state}}</td> -->
+                            <td md-cell>{{result.state}}</td>
                             <!-- <td md-cell>{{result.postal_code}}</td> -->
                             <!-- <td md-cell>{{result.rating}}</td> -->
                             <td md-cell><a ng-href="{{result.link}}">{{result.link_name}}</a></td>
