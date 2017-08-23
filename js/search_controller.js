@@ -1,12 +1,12 @@
 acp.controller('search_controller', ['$rootScope', '$scope', '$http', 'MyService',
                 function($rootScope, $scope, $http, MyService) {
 
-    $scope.address = "7000 Briarcliff Gables Cir NE";
-    $scope.city = "Atlanta";
-    $scope.state = "GA";
+    $scope.address = "";
+    $scope.city = "";
+    $scope.state = "";
     $scope.country = "";
-    $scope.postal_code = "30329";
-    $scope.radius = 1000;
+    $scope.postal_code = "";
+    $scope.radius;
 
     $scope.price;
     $scope.link_name;
